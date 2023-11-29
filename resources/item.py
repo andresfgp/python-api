@@ -24,6 +24,14 @@ class Item(MethodView):
     @blp.response(200, ItemSchema)
     def put(self, item_data, item_id):
         item = ItemModel.query.get(item_id)
+        if item:
+            item.price = item_data["price"]
+            item.name = item_data["name"]
+        else: 
+            item = itemModel()
+            
+        db.session.add(item)
+        db.session.commit()
         raise NotImplementedError("Updating an item is not implemented.")
 
 
